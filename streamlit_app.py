@@ -22,6 +22,8 @@ st.dataframe(fruits_to_show)
 st.header("Fruityvice Fruit Advice")
 fruityvice_response = r.get("https://fruityvice.com/api/fruit/watermelon")
 fvr_json = fruityvice_response.json()
-#fvr_json_norm = pandas.json_normalize(fvr_json)
+
 st.text(fvr_json)
+
+fvr_json_norm = pandas.json_normalize(fvr_json)
 #st.dataframe(fvr_json_norm)
