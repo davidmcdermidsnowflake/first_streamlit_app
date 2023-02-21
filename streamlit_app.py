@@ -25,5 +25,5 @@ fvr_json = fruityvice_response.json()
 
 st.text(fvr_json)
 
-fvr_json_norm = pandas.json_normalize(fvr_json)
+fvr_json_norm = p.json_normalize(fvr_json)
 #st.dataframe(fvr_json_norm)
