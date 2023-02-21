@@ -8,7 +8,14 @@ def normalize(fruit_choice):
     fruityvice_response = r.get("https://fruityvice.com/api/fruit/" + choice)
     fvr_json = fruityvice_response.json()
     return p.json_normalize(fvr_json)
-  
+ 
+def insert_row_snowflake(new_fruit):
+    my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])   
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("insert into fruit_load_list values ('" + new_fruit "')")
+        my_cnx.close()
+        return "Thanks for adding " + new_fruit
+    
 st.title('My Parents New Healthy Diner')
 
 st.header('Breakfast Menu')
@@ -41,13 +48,13 @@ def get_fruit_load_list():
         my_cur.execute("SELECT * from fruit_load_list")
         return my_cur.fetchall()
 
-if(st.button("Get Fruit List Load")):
+if(st.button("Get Fruit List")):
     my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])   
     my_data_rows = get_fruit_load_list()
+    my_cnx.close()
     st.dataframe(my_data_rows)
+    
 
-    st.stop()
-
-addchoice = st.text_input("what fruit would you like information about", "kiwi")
-
-st.write("the user entered", addchoice)
+addchoice = st.text_input("what fruit would you like to add")
+res = insert_row_snowflake(addchoice)
+st.write(res)
