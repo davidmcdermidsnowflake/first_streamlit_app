@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as p
 import requests as r
-import snowflake.connector as c
+import snowflake.connector
 
 st.title('My Parents New Healthy Diner')
 
@@ -30,3 +30,10 @@ fvr_json = fruityvice_response.json()
 
 fvr_json_norm = p.json_normalize(fvr_json)
 st.dataframe(fvr_json_norm)
+
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+my_cur = my_cnx.cursor()
+my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
+my_data_row = my_cur.fetchone()
+streamlit.text("Hello from Snowflake:")
+streamlit.text(my_data_row)
