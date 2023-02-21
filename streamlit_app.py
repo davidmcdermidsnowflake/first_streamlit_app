@@ -21,4 +21,7 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 st.dataframe(fruits_to_show)
 st.header("Fruityvice Fruit Advice")
 fruityvice_response = r.get("https://fruityvice.com/api/fruit/watermelon")
+fvr_json = fruityvice_response.json()
+fvr_json_norm = pandas.json_normalize(fvr_json)
 st.text(fruityvice_response.json())
+st.dataframe(fvr_json_norm)
