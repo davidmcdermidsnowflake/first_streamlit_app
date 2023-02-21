@@ -36,9 +36,6 @@ try:
 except URLError as e:
   st.error()
 
-
-
-st.stop()
 def get_fruit_load_list():
     with my_cnx.cursor() as my_cur:
         my_cur.execute("SELECT * from fruit_load_list")
@@ -48,6 +45,8 @@ if(st.button("Get Fruit List Load")):
     my_cnx = snowflake.connector.connect(**st.secrets["snowflake"])   
     my_data_rows = get_fruit_load_list()
     st.dataframe(my_data_rows)
+
+    st.stop()
 
 addchoice = st.text_input("what fruit would you like information about", "kiwi")
 
