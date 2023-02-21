@@ -20,10 +20,12 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 
 st.dataframe(fruits_to_show)
 st.header("Fruityvice Fruit Advice")
-fruityvice_response = r.get("https://fruityvice.com/api/fruit/watermelon")
+choice = st.text_input("what fruit would you like information about", "kiwi")
+st.write("the user entered", choice)
+
+fruityvice_response = r.get("https://fruityvice.com/api/fruit/" + choice)
 fvr_json = fruityvice_response.json()
 
-st.text(fvr_json)
 
 fvr_json_norm = p.json_normalize(fvr_json)
 st.dataframe(fvr_json_norm)
